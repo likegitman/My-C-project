@@ -61,7 +61,7 @@ void Color(int color) {
 }
 
 /*====================================*/
-
+//열거형 함수
 enum {
 	BLACK, 
 	DARK_BLUE,
@@ -83,6 +83,7 @@ enum {
 
 /*================================================================*/
 
+//gotoxy 함수 
 void gotoxy(int x, int y) {
 	COORD Pos;
 	Pos.X = x;
@@ -132,15 +133,16 @@ int score = 0;
 
 /*-------------------------------------------*/
 int main() {
-	system("mode con: lines=40");
+	system("mode con: lines=40");	//콘솔 세로 크기 40
 
-	system("pause>null");
+	system("pause>null");	//계속하려면 아무키나 누르십시오 삭제
 	
-	Cursorview(0);
+	Cursorview(0);	//커서 깜박이 삭제
 	
-	Menu();
+	Menu(); // 메뉴 함수 호출
 	return 0;
 }
+// 메뉴 화면
 void Menu() {
 	
 	int n;
@@ -189,6 +191,7 @@ void length() {
 	}
 }
 
+//게임 시작시 유저에게 보이는 인터페이스
 void Userinter() {
 	gotoxy(95, 2); printf("   ◀ E R R O R ▶    ");
 	gotoxy(93, 4); printf("  ◀ S H O O T I N G ▶  ");
@@ -210,12 +213,14 @@ void Userinter() {
 	gotoxy(100, 35); printf("SCORE : %d", score);
 }
 
+//플레이어 
 void Drawplayer() {
 	Color(RED);
 	gotoxy(px, 39); printf("<◀▲▶>");
 	Color(GRAY);
 }
 
+//플레이어 움직이기
 void Moveplayer() {
 	int i;
 	char ch;
@@ -258,21 +263,25 @@ void Moveplayer() {
 	}
 }
 
+//이동했을때 플레이어 지우기
 void Eraseplayer() {
 	gotoxy(px, 39); printf("        ");
 }
 
+//플레이어 총알 그리기
 void Drawbullet(int i) {
 	Color(GREEN);
 	gotoxy(Bullet[i].x, Bullet[i].y); printf("★");
 	Color(GRAY);
 }
 
+//총알이 움직일때마다 지우기
 void Erasebullet(int i) {
-	gotoxy(Bullet[i].x, Bullet[i].y); printf("  ");
+	gotoxy(Bullet[i].x, Bullet[i].y); printf("  ");	//특수문자 지울때는 공백 두칸!
 
 }
 
+//플레이어 총알 움직임
 void Movebullet() {
 	int i;
 	for (i = 0; i < MAXBULLET; i++) {
@@ -290,6 +299,7 @@ void Movebullet() {
 	}
 }
 
+//플레이어 미사일 그리기
 void Drawmissile() {
 	Color(RED);
 	gotoxy(mx, my - 2); printf("▲▲");
@@ -298,12 +308,14 @@ void Drawmissile() {
 	Color(GRAY);
 }
 
+//플레이어 미사일 움직일때마다 지우기 
 void Erasemissile() {
 	gotoxy(mx, my - 2); printf("    ");
 	gotoxy(mx, my - 1); printf("    ");
 	gotoxy(mx, my);     printf("    ");
 }
 
+//플레이어 미사일 움직임
 void Movemissile() {
 	if (mx != -1) {
 		Erasemissile();
@@ -317,6 +329,7 @@ void Movemissile() {
 	}
 }
 
+//적 구현
 void Drawenemy() {
 	BOOL Found;
 	int i, j;
@@ -351,7 +364,7 @@ void Drawenemy() {
 		}
 	}
 }
-
+// 적 움직임
 void Moveenemy() {
 	int i;
 	for (i = 0; i < MAXENEMY; i++) {
@@ -397,16 +410,19 @@ void Moveenemy() {
 	}
 }
 
+//적 총알 그리기
 void Drawenb(int i) {
 	gotoxy(EnemyBullet[i].x, EnemyBullet[i].y);
 	printf("↓");
 }
 
+//적 총알 움직일때마다 지우기
 void Eraseenb(int i) {
 	gotoxy(EnemyBullet[i].x, EnemyBullet[i].y);
-	printf("    ");
+	printf("  ");
 }
 
+//적 총알 움직임
 void Moveenb() {
 	int i;
 	for (i = 0; i < MAXBULLET; i++) {
@@ -434,7 +450,7 @@ void Moveenb() {
 		}
 	}
 }
-
+//적 총알 발사  
 void Shootenb(int i) {
 	int j;
 
@@ -449,6 +465,7 @@ void Shootenb(int i) {
 	}
 }
 
+//적 충돌 
 void Enemycollision() {
 	int i;
 	for (i = 0; i < MAXENEMY; i++) {
@@ -484,6 +501,7 @@ void Enemycollision() {
 	}
 }
 
+//플레이어 충돌
 void Playercollision() {
 	int i;
 	char ch;
@@ -509,6 +527,7 @@ void Playercollision() {
 	}
 }
 
+//게임오버때 화면에 멘트
 void Overment() {
 	Color(RED);
 	gotoxy(44, 17);
@@ -530,6 +549,7 @@ void Overment() {
 
 }
 
+//게임오버 됐을 때 화면
 void Gameover() {
 	system("cls");
 	char ch;
@@ -554,6 +574,7 @@ void Gameover() {
 	}
 }
 
+//게임 화면(key 1)
 void Game() {
 	system("cls");
 	Color(RED);
@@ -595,6 +616,7 @@ void Game() {
 	Gameover();
 }
 
+//메뉴에서 예외 문자 입력시 화면
 void Nonum() {
 	system("cls");
 	char ch;
@@ -609,6 +631,7 @@ void Nonum() {
 	}
 }
 
+//게임 정보 (key 2)
 void Info() {
 	char ch;
 	system("cls");
@@ -640,6 +663,7 @@ void Info() {
 	}
 }
 
+//랭킹 화면
 void Rank_Draw() {
 	system("cls");
 	
@@ -651,6 +675,7 @@ void Rank_Draw() {
 
 }
 
+//랭킹 키 입력받기
 int keycontrol() {
 	char temp = getch();
 	
@@ -659,6 +684,7 @@ int keycontrol() {
 	}
 }
 
+//랭킹 버블 정렬
 void Rank_arr() {
 	int count = 0;   
 	//파일에서 랭킹을 불러오는 수를 저장함(이 수로 버블정렬을 돌려서 연산을 최소화함)
@@ -742,7 +768,7 @@ void Rank_arr() {
 	}*/
 
 }
-
+//랭킹 시스템 모음
 void Rank_System() {
 
 	Rank_Draw();
